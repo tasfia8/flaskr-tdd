@@ -1145,7 +1145,7 @@ And replace the code in *index.html* with:
 </html>
 ```
 
-Run the app locally:
+Run the app locally: (Suggested to do <pip install gunicorn> on local VS code terminal before running everything)
 
 ```sh
 (env)$ FLASK_APP=project/app.py python -m flask run -p 5001
