@@ -48,17 +48,28 @@
       </form>
 
       <ul class="entries">
-        {% set has_results = false %}
-        {% for entry in entries %}
-          {% if query.lower() in entry.title.lower() or query.lower() in entry.text.lower() %}
-            {% set has_results = true %}
-            <li class="entry">
-              <h2 id="{{ entry.post_id }}">{{ entry.title }}</h2>
-              {{ entry.text|safe }}
-            </li>
+        {% if not query %}
+          <!-- Show this message if the user clicks search without entering anything -->
+          <li><em>Please enter a search query.</em></li>
+        {% else %}
+          {% set has_results = false %}
+          {% for entry in entries %}
+            {% if query.lower() in entry.title.lower() or query.lower() in entry.text.lower() %}
+              {% set has_results = true %}
+              <li class="entry">
+                <h2 id="{{ entry.post_id }}">{{ entry.title }}</h2>
+                {{ entry.text|safe }}
+              </li>
+            {% endif %}
+          {% endfor %}
+
+          <!-- If no results are found -->
+          {% if not has_results %}
+            <li><em>No results found for "{{ query }}".</em></li>
           {% endif %}
-        {% endfor %}
-       
+        {% endif %}
+
+
       </ul>
     </div>
     <script

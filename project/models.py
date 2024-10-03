@@ -3,6 +3,9 @@ from project.app import db
 
 class Post(db.Model): 
 
+    __tablename__ = 'post'
+
+    
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     text = db.Column(db.String, nullable=False)
