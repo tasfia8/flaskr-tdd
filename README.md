@@ -1379,6 +1379,15 @@ def search():
 
 > Be sure to write a test for this on your own!
 
+### Own After writing the test for Search do the following 4 commands:
+first delete flaskr.db
+
+python -m pytest 
+
+python create_db.py 
+
+FLASK_APP=project/app.py python -m flask run -p 5001
+
 ### Add *search.html*
 
 In the "templates" folder create a new file called *search.html*:
