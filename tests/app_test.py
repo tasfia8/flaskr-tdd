@@ -1,4 +1,4 @@
-import os
+# import os
 import pytest
 from pathlib import Path
 
@@ -78,6 +78,7 @@ def test_messages(client):
     assert b"&lt;Hello&gt;" in rv.data
     assert b"<strong>HTML</strong> allowed here" in rv.data
 
+
 def test_delete_message(client):
     """Ensure the messages are being deleted"""
     rv = client.get("/delete/1")
@@ -88,50 +89,47 @@ def test_delete_message(client):
     data = json.loads(rv.data)
     assert data["status"] == 1
 
+
 def test_search(client):
     """A test ensuring right posts are returned"""
 
-    #placeholder info for posts
+    # placeholder info for posts
     dataofPost = namedtuple("dataofPost", ["title", "text"])
-    
+
     info_post = [
         dataofPost("Post 1", "Initial post"),
         dataofPost("Post 2", "A different post"),
         dataofPost("Searchable Post", "This post is searchable"),
-        dataofPost("Search Test", "Testing the search function")
+        dataofPost("Search Test", "Testing the search function"),
     ]
-    
-    test1, test2, test3, test4 = [Post(title = i.title, text=i.text) for i in info_post]
-    
+
+    test1, test2, test3, test4 = [Post(title=i.title, text=i.text) for i in info_post]
+
     db.session.add_all([test1, test2, test3, test4])
-    #Commit the session
+    # Commit the session
     db.session.commit()
 
-
-    # Case1: Multiple Results - find the posts that matches multiple text 
-    reply = client.get('/search/?query=search')
+    # Case1: Multiple Results - find the posts that matches multiple text
+    reply = client.get("/search/?query=search")
     # Identify reply contains test 3 & 4 data
     assert reply.status_code == 200
     assert b"Searchable Post" in reply.data
     assert b"Search Test" in reply.data
 
-    #Irrelevant posts excluded
+    # Irrelevant posts excluded
     assert b"Post 1" not in reply.data
     assert b"Post 2" not in reply.data
 
-
-    #Case dealing with insensitive search
-    reply = client.get('/search/?query=SEARCH')
+    # Case dealing with insensitive search
+    reply = client.get("/search/?query=SEARCH")
     assert b"Searchable Post" in reply.data
     assert b"Search Test" in reply.data
 
-    #datainquery partial Matches with a post
-    reply = client.get('/search/?query=test')
+    # datainquery partial Matches with a post
+    reply = client.get("/search/?query=test")
     assert b"Search Test" in reply.data
     assert b"Testing the search function" in reply.data
 
-    #Case: Search return no findings
-    #reply = client.get('/search/?query=nothing')
-    #assert b"No entries yet." in reply.data or reply.data == b""  
-
-
+    # Case: Search return no findings
+    # reply = client.get('/search/?query=nothing')
+    # assert b"No entries yet." in reply.data or reply.data == b""

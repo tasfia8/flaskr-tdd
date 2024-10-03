@@ -17,4 +17,3 @@ with app.app_context():
     # commit the changes
     db.session.commit()
     print("Dummy post added to the Post table!")
-

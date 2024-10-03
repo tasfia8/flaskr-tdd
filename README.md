@@ -1577,14 +1577,56 @@ $env:DATABASE_URL="the value of the external database URL you copied earlier"
 ```
 
 3. With the DATABASE_URL set, run db.create_all() locally to create the tables in the Postgres database.
+   
+   ### Own: Do the following commands to create the tables and run the test (Step 3 & 4)
+   
+   -Make sure you are in the project folder not flaskr-tdd.
+   
+   (env) tasfiaislam@Tasfias-MBP ~/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd % **cd project**
+   
+   (env) tasfiaislam@Tasfias-MBP ~/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd/project % **flask shell**
+
+Python 3.12.1 (v3.12.1:2305ca5144, Dec  7 2023, 17:23:38) [Clang 13.0.0 (clang-1300.0.29.30)] on darwin
+App: project.app
+
+Instance: /Users/tasfiaislam/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd/instance
+
+>>> db.create_all()
+
+>>> exit()
+
+(env) tasfiaislam@Tasfias-MBP ~/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd/project % **cd ~/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd**
+
+(env) tasfiaislam@Tasfias-MBP ~/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd % **python -m pytest**
+
+======================================== test session starts =========================================
+platform darwin -- Python 3.12.1, pytest-8.3.3, pluggy-1.5.0
+
+collected 7 items                                                                                    
+
+tests/app_test.py .......                                                                      [100%]
+
+========================================= 7 passed in 0.40s ==========================================
+
+(env) tasfiaislam@Tasfias-MBP ~/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd % **python create_db.py **                                
+
+Testing: Database and tables created successfully!
+Dummy post added to the Post table!
+
+(env) tasfiaislam@Tasfias-MBP ~/Desktop/ECE444/Labs/Lab3/Lab3vscode/flaskr-tdd % **FLASK_APP=project/app.py python -m flask run -p 5001**
+
 
 ![](images/image-20.png)
 
-4. Run the tests to ensure they still pass locally.
-5. Commit and push your code to the GitHub
-6. Go to the Render dashboard. We need to set up the database for the Flaskr-tdd project. In your web service settings on Render for the application, create an environment variable named DATABASE_URL and set its value to the Internal Database URL saved in the previous step.
+1. Run the tests to ensure they still pass locally.
+2. Commit and push your code to the GitHub
+3. Go to the Render dashboard. We need to set up the database for the Flaskr-tdd project. In your web service settings on Render for the application, create an environment variable named DATABASE_URL and set its value to the Internal Database URL saved in the previous step.
 
 ![](images/image-15.png)
+
+**Own:** To avoid the post error in Rendor app, set the starter command of Render by going settings of the web app and setting start 
+command to: 
+<python create_db.py; gunicorn project.app:app>
 
 7. The deployment should start automatically upon a new commit. Once the deployment is completed, you can access the web service by clicking on the URL under the project name.
 
