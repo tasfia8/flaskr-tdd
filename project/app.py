@@ -94,7 +94,25 @@ def delete_entry(post_id):
         result = {'status': 0, 'message': repr(e)}
     return jsonify(result)
 
+@app.route('/search/', methods=['GET'])
+def search():
+    query = request.args.get("query")
+    
+    # If there's a query, filter the entries based on the query
+    if query:
+        entries = db.session.query(models.Post).filter(
+            (models.Post.title.ilike(f'%{query}%')) |
+            (models.Post.text.ilike(f'%{query}%'))
+        ).all()
+    else:
+        # No query entered, so we pass an empty list of entries
+        entries = []
+    
+    # Render the template, pass the filtered entries and the query
+    return render_template('search.html', entries=entries, query=query)
 
+
+"""
 @app.route('/search/', methods=['GET'])
 def search():
     query = request.args.get("query")
@@ -103,6 +121,7 @@ def search():
         return render_template('search.html', entries=entries, query=query)
     return render_template('search.html')
 
+"""
 
 if __name__ == "__main__":
     app.run()
