@@ -1,5 +1,11 @@
 # Tasfia's - U of T ECE444 PRA3 TDD & Deployment
 
+**My Render account:** https://dashboard.render.com/web/srv-crunhtd2ng1s73el7m7g/logs 
+
+**Web Service Link:** Final Demo here (90 Days Access to Database)
+https://flaskr-tdd-1x8t.onrender.com
+
+
 This repository is adapted from https://github.com/shuruizUofT/flaskr-tdd and this link is a modified version of the [upstream project](https://github.com/mjhea0/flaskr-tdd).
 
 ### Summary of updates:

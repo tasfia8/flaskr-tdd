@@ -115,6 +115,10 @@ def test_search(client):
     assert reply.status_code == 200
     assert b"Searchable Post" in reply.data
     assert b"Search Test" in reply.data
+    #Test case will fail:
+    #assert b"Lalalalal" in reply.data
+
+
 
     # Irrelevant posts excluded
     assert b"Post 1" not in reply.data
@@ -124,12 +128,15 @@ def test_search(client):
     reply = client.get("/search/?query=SEARCH")
     assert b"Searchable Post" in reply.data
     assert b"Search Test" in reply.data
+    #Test case will fail:
+    #assert b"Nonexistent Post" in reply.data
+
+
 
     # datainquery partial Matches with a post
     reply = client.get("/search/?query=test")
     assert b"Search Test" in reply.data
     assert b"Testing the search function" in reply.data
-
-    # Case: Search return no findings
-    # reply = client.get('/search/?query=nothing')
-    # assert b"No entries yet." in reply.data or reply.data == b""
+    #Test case will fail:
+    #reply = client.get("/search/?query=nothing")
+    #assert b"Search Test" in reply.data  # Incorrect assertion
